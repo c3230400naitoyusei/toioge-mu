@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  background: #87ceeb; /* 空色 */
+}
+canvas {
+  display: block;
+  margin: 0 auto;
+  background: #228B22; /* 地面色 */
+  border: 3px solid black;
+}
