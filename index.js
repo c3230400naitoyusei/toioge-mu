@@ -1,35 +1,35 @@
-const moles = document.querySelectorAll('.mole');
-const scoreBoard = document.getElementById('score');
-const startBtn = document.getElementById('startBtn');
-let score = 0;
-let gameInterval;
-let gameTime = 15000;
-
-function showRandomMole() {
-  moles.forEach(m => m.classList.remove('show'));
-  const i = Math.floor(Math.random() * moles.length);
-  const mole = moles[i];
-  mole.classList.add('show');
-
-  mole.onclick = () => {
-    if (mole.classList.contains('show')) {
-      score++;
-      scoreBoard.textContent = `スコア: ${score}`;
-      mole.classList.remove('show');
-    }
-  };
-}
+const box = document.getElementById('box');
+const message = document.getElementById('message');
+let startTime, timeoutId;
 
 function startGame() {
-  score = 0;
-  scoreBoard.textContent = 'スコア: 0';
-  gameInterval = setInterval(showRandomMole, 700);
+  box.style.backgroundColor = 'gray';
+  box.textContent = '待って…';
+  message.textContent = '';
 
-  setTimeout(() => {
-    clearInterval(gameInterval);
-    moles.forEach(m => m.classList.remove('show'));
-    alert(`終了！スコア: ${score}`);
-  }, gameTime);
+  const delay = Math.random() * 3000 + 2000; // 2〜5秒
+  timeoutId = setTimeout(() => {
+    box.style.backgroundColor = 'green';
+    box.textContent = '今だ！クリック！';
+    startTime = Date.now();
+  }, delay);
 }
 
-startBtn.onclick = startGame;
+box.onclick = () => {
+  if (box.style.backgroundColor === 'green') {
+    const reactionTime = Date.now() - startTime;
+    message.textContent = `反応時間: ${reactionTime} ミリ秒`;
+    box.textContent = 'もう一度やる？';
+    box.style.backgroundColor = 'gray';
+  } else if (box.style.backgroundColor === 'gray') {
+    clearTimeout(timeoutId);
+    startGame();
+  } else {
+    clearTimeout(timeoutId);
+    message.textContent = 'フライング！早すぎる！';
+    box.style.backgroundColor = 'red';
+    box.textContent = 'もう一度やる？';
+  }
+};
+
+startGame();
