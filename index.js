@@ -3,7 +3,7 @@ const scoreBoard = document.getElementById('score');
 const startBtn = document.getElementById('startBtn');
 let score = 0;
 let gameInterval;
-let gameTime = 15000; // 15秒
+let gameTime = 15000;
 
 function showRandomMole() {
   moles.forEach(m => m.classList.remove('show'));
@@ -23,12 +23,12 @@ function showRandomMole() {
 function startGame() {
   score = 0;
   scoreBoard.textContent = 'スコア: 0';
-  gameInterval = setInterval(showRandomMole, 800);
+  gameInterval = setInterval(showRandomMole, 700);
 
   setTimeout(() => {
     clearInterval(gameInterval);
     moles.forEach(m => m.classList.remove('show'));
-    alert(`ゲーム終了！あなたのスコアは ${score} 点です！`);
+    alert(`終了！スコア: ${score}`);
   }, gameTime);
 }
 
