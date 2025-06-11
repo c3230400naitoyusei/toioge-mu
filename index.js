@@ -1,47 +1,35 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+const moles = document.querySelectorAll('.mole');
+const scoreBoard = document.getElementById('score');
+const startBtn = document.getElementById('startBtn');
+let score = 0;
+let gameInterval;
+let gameTime = 15000; // 15秒
 
-const player = {
-  x: 100,
-  y: 300,
-  width: 50,
-  height: 50,
-  color: "red",
-  velocityY: 0,
-  jumpPower: -15,
-  gravity: 0.8,
-  grounded: true
-};
+function showRandomMole() {
+  moles.forEach(m => m.classList.remove('show'));
+  const i = Math.floor(Math.random() * moles.length);
+  const mole = moles[i];
+  mole.classList.add('show');
 
-document.addEventListener("keydown", (e) => {
-  if (e.code === "Space" && player.grounded) {
-    player.velocityY = player.jumpPower;
-    player.grounded = false;
-  }
-});
-
-function update() {
-  player.velocityY += player.gravity;
-  player.y += player.velocityY;
-
-  // 地面に着地
-  if (player.y + player.height >= canvas.height) {
-    player.y = canvas.height - player.height;
-    player.velocityY = 0;
-    player.grounded = true;
-  }
+  mole.onclick = () => {
+    if (mole.classList.contains('show')) {
+      score++;
+      scoreBoard.textContent = `スコア: ${score}`;
+      mole.classList.remove('show');
+    }
+  };
 }
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = player.color;
-  ctx.fillRect(player.x, player.y, player.width, player.height);
+function startGame() {
+  score = 0;
+  scoreBoard.textContent = 'スコア: 0';
+  gameInterval = setInterval(showRandomMole, 800);
+
+  setTimeout(() => {
+    clearInterval(gameInterval);
+    moles.forEach(m => m.classList.remove('show'));
+    alert(`ゲーム終了！あなたのスコアは ${score} 点です！`);
+  }, gameTime);
 }
 
-function gameLoop() {
-  update();
-  draw();
-  requestAnimationFrame(gameLoop);
-}
-
-gameLoop();
+startBtn.onclick = startGame;

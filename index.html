@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>Mini Mario</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>モグラ叩きゲーム</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="gameCanvas" width="800" height="400"></canvas>
-  <script src="game.js"></script>
+  <h1>モグラ叩きゲーム</h1>
+  <div id="score">スコア: 0</div>
+  <button id="startBtn">ゲームスタート</button>
+  <div id="game">
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+    <div class="hole"><div class="mole"></div></div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
